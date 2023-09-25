@@ -57,8 +57,7 @@ if( RP2040_BUILD)
    #
    # The error is not seen if pico_sdk_init.cmake is before the project declaration
    #
-    set(PICO_SDK_PATH ${PICOSDK_SOURCE_FOLDER})
-    include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
+    include(pico_sdk_import.cmake)
 
 endif()
 
@@ -866,13 +865,7 @@ set(BASE_PATH_FOR_PLATFORM ${CMAKE_CURRENT_SOURCE_DIR}/targets/${RTOS})
 
 #######################
 # FreeRTOS or AzureRTOS
-
-
-if(RP2040_BUILD)
-   
-add_subdirectory(${PROJECT_SOURCE_DIR}/targets/AzureRTOS/RaspberryPi/${TARGET_BOARD})
-
-elseif(RTOS_FREERTOS_CHECK OR RTOS_AZURERTOS_CHECK)
+if(RTOS_FREERTOS_CHECK OR RTOS_AZURERTOS_CHECK)
 
     add_subdirectory(${BASE_PATH_FOR_PLATFORM})
 

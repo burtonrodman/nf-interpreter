@@ -4,25 +4,29 @@
 #
 # RP2040 series
 
-
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-
-
-# The following pico_sdk_init.cmake is included in the top level CMakeLists.txt.
-# If it is not included before the project declaration, an error occurs in adding the ELF2UF2.
-# include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
-#
 pico_sdk_init()
 
-include( CMake/RP2040.nfInterpreter.cmake)
-include( CMake/RP2040.Azure.Threadx.cmake)
+# include( CMake/RP2040.nfInterpreter.cmake)
+# include( CMake/RP2040.Azure.Threadx.cmake)
 
 # NOTE: Target link libraries may be a better long term solution
 #       as used by typical pico-sdk examples
 #       For now, use a list of files.
-include( CMake/RP2040.pico-sdk.cmake)
+include(CMake/RP2040.pico-sdk.cmake)
+
+include(binutils.common)
+include(binutils.AzureRTOS)
+include(AZURERTOS_${TARGET_SERIES}_GCC_options)
+
+ENABLE_LANGUAGE(ASM)
+
+set(THREADX_ARCH "cortex_m0")
+set(THREADX_TOOLCHAIN "gnu")
+add_subdirectory(${AZURERTOS_SOURCE_FOLDER} AzureSource)
+
 
 add_executable( nanoCLR
     ${NF_INTERPRETER_SOURCES}
@@ -98,7 +102,7 @@ target_compile_definitions(nanoCLR PUBLIC
                            CFG_TUSB_MCU=OPT_MCU_RP2040
  )
 
- nf_set_pico_sdk_build_options()
+nf_set_pico_sdk_build_options()
 
 
 # Adds .hex, .bin, .dis, .elf outputs

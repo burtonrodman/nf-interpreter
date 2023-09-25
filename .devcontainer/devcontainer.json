@@ -9,7 +9,7 @@
 	// If you prefer, you can use the source files and adjust them where they are located,
 	// To do this, prefix 'sources'. e.g. 'sources/Dockerfile.All'.
 	// This will allow you to customize and build the container source and add anything you may need on top.
-	"dockerFile": "Dockerfile.All",
+	"dockerFile": "sources/Dockerfile.AzureRTOS",
 	"context": ".",
 	"mounts": [
 		// Bind the Unix socket the Docker daemon listens on by default
@@ -42,7 +42,7 @@
 				"xaver.clang-format"
 			]
 		}
-	}
+	},
 	// You can pull all the repos with the latest changes, this is only valid if you are using the ./sources/Dockerfile.All containers
 	// "postAttachCommand": "/usr/local/git-pull-repos.sh"
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -51,4 +51,8 @@
 	// "postCreateCommand": "terraform --version",
 	// Uncomment to connect as a non-root user. See https: //aka.ms/vscode-remote/containers/non-root.
 	// ,"remoteUser": "vscode"
+
+    "containerEnv": {
+        "PICO_SDK_PATH": "/pico/pico-sdk"
+    }
 }
